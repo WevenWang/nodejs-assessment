@@ -1,4 +1,4 @@
-import express, { Request, Response, NextFunction } from "express";
+import express from "express";
 import {
 	getAllUsers,
 	createUser,
@@ -19,16 +19,23 @@ app.get("/users/:id", getUserById);
 app.put("/users/:id", updateUser);
 app.delete("/users/:id", deleteUser);
 
-app.get("/", (req: Request, res: Response) => {
+app.get("/", (req, res) => {
 	res.set("Content-Type", "text/html");
 	res.status(200).send("<h1>Hello World</h1>");
 });
 
 // Centralized error handling middleware
-app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
-	logger.error(err.stack);
-	res.status(500).json({ error: "Internal Server Error" });
-});
+app.use(
+	(
+		err: Error,
+		req: express.Request,
+		res: express.Response,
+		next: express.NextFunction
+	) => {
+		logger.error(err.stack);
+		res.status(500).json({ error: "Internal Server Error" });
+	}
+);
 
 app.listen(PORT, (error?: any) => {
 	if (!error) {
