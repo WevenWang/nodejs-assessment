@@ -15,8 +15,11 @@ node_modules/
 .npm
 
 # Environment files
-.env
+
 .env.*
 
 # Misc
 .DS_Store
+
+# dist
+dist
